@@ -18,7 +18,7 @@ function requireValue(ok){if(!ok)throw Error('Backup non valido o incompatibile.
 export function validate(data){
  requireValue(data&&data.schema===1&&data.team&&typeof data.team.name==='string'&&Array.isArray(data.team.players)&&Array.isArray(data.matches));
  const id=v=>typeof v==='string'&&/^[A-Za-z0-9_-]{1,80}$/.test(v);
- const player=p=>p&&id(p.id)&&typeof p.first==='string'&&typeof p.last==='string'&&typeof p.number==='string'&&typeof p.role==='string';
+ const player=p=>p&&id(p.id)&&typeof p.first==='string'&&typeof p.last==='string'&&typeof p.number==='string'&&typeof p.role==='string'&&(p.nickname===undefined||(typeof p.nickname==='string'&&p.nickname.length<=40));
  const unique=xs=>new Set(xs).size===xs.length;
  requireValue(data.team.players.every(player)&&unique(data.team.players.map(p=>p.id))&&unique(data.matches.map(m=>m.id)));
  for(const m of data.matches){
